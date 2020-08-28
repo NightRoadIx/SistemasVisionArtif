@@ -31,7 +31,7 @@ Códigos Fuente para programación de Sistemas de Visión Artificial elaborados 
 **exempel026** Ejemplo de la transforada de Hough para la detección de líneas  
 **exempel027** Ejemplo de la transforada de Hough para la detección de circunferencias  
 **exempel028** Detección de "esquinas" en una imagen (detector de esquinas de Harris)  
-**exempel029** Detector de esquinas II
+**exempel029** Detector de esquinas II  
 **exempel030** Captura de fotogramas para video en "t R"    
 **exempel031** Captura de video con códec XVID  
 **exempel032** Clasificadores haarcascade para determinar la cara  
