@@ -35,9 +35,9 @@ Códigos Fuente para programación de Sistemas de Visión Artificial elaborados 
 **exempel030** Captura de fotogramas para video en "t R"    
 **exempel031** Captura de video con códec XVID  
 **exempel032** Clasificadores haarcascade para determinar la cara  
-**exempel033** Clasificadores haarcascade para detección de rostro, boca y ojos  
-**exempel034** Determinar movimiento y tiempo del mismo  
-**exempel035** Clasificadores haarcascade para detección rostro y ojos*  
+**exempel033** Clasificadores haarcascade para detección rostro y ojos*  
+**exempel034** Clasificadores haarcascade para detección de rostro, boca y ojos  
+**exempel035** Determinar movimiento y tiempo del mismo  
 **exempel036** Seguir un objeto umbralizado en video  
 **exempel037** Clasificador de imágenes (perros y gatos) usando un aumentado del grupo de imágenes  
 **exempel038** Clasificador de imágenes en clases con TensorFlow  
