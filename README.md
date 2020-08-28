@@ -19,6 +19,7 @@ Códigos Fuente para programación de Sistemas de Visión Artificial elaborados 
 **exempel014** Encontrar gradientes y bordes    
 **exempel015** Detector de bordes por Canny    
 **exempel016** Histograma de las imágenes    
+**exempel016b** Ecualización del histograma  
 **exempel017** Umbralización    
 **exempel018** Umbralización utilizando filtros    
 **exempel019** Umbralización con Otsu y filtrado  
