@@ -14,7 +14,7 @@ Códigos Fuente para programación de Sistemas de Visión Artificial elaborados 
 **exempel010** Colocar una imagen como logo de otra, fusión de imágenes    
 **exempel011** Transformaciones geométricas de imágenes    
 **exempel012** Filtrado de imágenes    
-**exempel012b** Filtrado de imágenes II
+**exempel012b** Filtrado de imágenes II  
 **exempel013** Transformaciones morfológicas    
 **exempel014** Encontrar gradientes y bordes    
 **exempel015** Detector de bordes por Canny    
