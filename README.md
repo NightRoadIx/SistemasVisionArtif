@@ -1,7 +1,7 @@
 # SistemasVisionArtif
 Códigos Fuente para programación de Sistemas de Visión Artificial elaborados principalmente en lenguaje Python utilizando la librería OpenCV, junto con TensorFlow y Keras
 
--- Pyhton --  
+-- Python --  
 exempel001 Apertura de imágenes con OpenCV  
 exempel002 Apertura de imágenes con Matplotlib  
 exempel003 Uso del evento ratón dentro de OpenCV  
@@ -24,27 +24,24 @@ exempel018 Umbralización utilizando filtros
 exempel019 Umbralización con Otsu y filtrado  
 exempel020 Modelos y espacios de color  
 exempel021 Segmentar mediante modelos de color  
-
-ruidoimag Generar "ruido" de manera artificial a la imagen  
-pngalpha Canal alpha (transparencia) de una imagen PNG  
-contornos Detección de contornos por medio de funciones OpenCV  
-detector_bordes Realizar la detección de cordes de una imagen y marcarlos  
-hough01 Ejemplo de la transforada de Hough para la detección de líneas  
-hough02 Ejemplo de la transforada de Hough para la detección de circunferencias  
-esquinas Detección de "esquinas" en una imagen (detector de esquinas de Harris)  
-esquinas2 Detector de esquinas II
-
-
-
-exempel022 Captura de fotogramas para video en "t R"    
-exempel023 Captura de video con códec XVID  
-exempel024 Clasificadores haarcascade para determinar la cara  
-exempel025 Clasificadores haarcascade para detección de rostro, boca y ojos  
-exempel026 Determinar movimiento y tiempo del mismo  
-exempel027 Clasificadores haarcascade para detección rostro y ojos*  
-exempel028 Seguir un objeto umbralizado en video  
-exempel029 Clasificador de imágenes (perros y gatos) usando un aumentado del grupo de imágenes  
-exempel030 Clasificador de imágenes en clases con TensorFlow  
+exempel022 Generar "ruido" de manera artificial a la imagen  
+exempel023 Canal alpha (transparencia) de una imagen PNG  
+exempel024 Detección de contornos por medio de funciones OpenCV  
+exempel025 Realizar la detección de cordes de una imagen y marcarlos  
+exempel026 Ejemplo de la transforada de Hough para la detección de líneas  
+exempel027 Ejemplo de la transforada de Hough para la detección de circunferencias  
+exempel028 Detección de "esquinas" en una imagen (detector de esquinas de Harris)  
+exempel029 Detector de esquinas II
+exempel030 Captura de fotogramas para video en "t R"    
+exempel031 Captura de video con códec XVID  
+exempel032 Clasificadores haarcascade para determinar la cara  
+exempel033 Clasificadores haarcascade para detección de rostro, boca y ojos  
+exempel034 Determinar movimiento y tiempo del mismo  
+exempel035 Clasificadores haarcascade para detección rostro y ojos*  
+exempel036 Seguir un objeto umbralizado en video  
+exempel037 Clasificador de imágenes (perros y gatos) usando un aumentado del grupo de imágenes  
+exempel038 Clasificador de imágenes en clases con TensorFlow  
+exempel039 Clasificaro de imágenes en clases con TensorFlow usando técnicas para mejorar aprendizaje
 
 
 
