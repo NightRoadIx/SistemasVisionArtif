@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 
 # Abrir dos imágenes
-img1 = cv2.imread('trapeador.jpg')
-img2 = cv2.imread('logo3.png')
+img1 = cv2.imread('trapeador.jpg') # Esta será la imagen base
+img2 = cv2.imread('logo3.png') # Esta será la imagen del logo (de tamaño menor)
 
 # Se desea colocar un logo en la esquina superior izquierda, por lo que se genera una ROI (Region Of Image, Región de la Imagen)
 rows,cols,channels = img2.shape
