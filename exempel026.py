@@ -1,67 +1,84 @@
-# pip install pandas
+'''
+	La transformada de Hough es un método que es utilizado para la detección de 
+	cualquier forma, si esa forma puede ser representada por medio de una función
+	matemática, puede detectar esa forma, a pesar de que este rota o distorsionada.
+	
+	Por ejemplo, una línea puede ser representada por medio de la siguiente ecuación:
+	y = mx + c o de forma paramétrica r = x cos(theta) + y sen(theta)
+	donde r es la distancia perpendicualr del origen a la línea y theta es el ángulo
+	formado por la línea perpendicular y el eje horizontal medido en sentido horario
+	(esto es arbitrario, pero así es representado en OpenCV).
+	
+	Ahora para que funcione el método por medio de la trasnformada de Hough se realizan
+	los siguientes pasos:
+	1.- Crear un arreglo 2D o acumulador (para almacenar los valores de dos parámetros)
+	    y se hacen cero.
+	2.-Las filas representarán r y las columnas theta del arreglo anterior
+	3.-El tamaño del arreglo dependerá de la precisión que se requiere. Por ejemplo, se 
+	   puede suponer que si se requieren ángulos de 1° de precisión, se tendrán 180 columnas
+	4.-Para r, la máxima distancia posible es la longitud de la longitud de la diagonal de la imagen.
+	   Por lo que al tomar un pixel de precisión, el número de columnas puede ser la longitud diaginal
+	   de la imagen
+'''
 import cv2
-import time
-from datetime import datetime
-import pandas
+import numpy as np
 
-first_frame = None
-status_list = [None, None]
-times = []
-df = pandas.DataFrame(columns=["Start", "End"])
+# Se hara la lectura de la imagen
+img = cv2.imread('left04.jpg')
+cv2.imshow('Original', img)
+cv2.waitKey(0)
 
-# Iniciar con la captura de video
-video = cv2.VideoCapture(0)
+# Se convierte a nivel de grises
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+cv2.imshow('Gris', gray)
+cv2.waitKey(0)
 
-while True:
- check, frame = video.read()
- status = 0
- 
- gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
- gray = cv2.GaussianBlur(gray, (21, 21), 0)
- 
- if first_frame is None:
-  first_frame = gray
-  continue
- 
- delta_frame = cv2.absdiff(first_frame, gray)
- thresh_delta = cv2.threshold(delta_frame, 150, 255, cv2.THRESH_BINARY)[1]
- thresh_delta = cv2.dilate(thresh_delta, None, iterations=0)
- (_,cnts) = cv2.findContours(thresh_delta.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
- 
- for contour in cnts:
-  if cv2.contourArea(contour) < 500:
-   continue
-  status = 1
-  (x, y, w, h) = cv2.boundingRect(contour)
-  cv2.rectangle(frame, (x,y), (x+w, y+h), (0,255,0), 3)
- 
- status_list.append(status)
+# Después se le aplica la detección de bordes por Canny 
+edges = cv2.Canny(gray,50,150,apertureSize = 3)
+cv2.imshow('Bordes', edges)
+cv2.waitKey(0)
+# En este punto es recomdnable en ocasiones realizar primero
+# un filtrado, después un la detección de bordes, para 
+# posteriormente hacer erosión y ensanchamiento
 
- status_list = status_list[-2:]
+# La función HpughLines permitirá obtener el arreglo 2D requerido
+# en la transformada de Hough
+# Parámetros (en orden):
+# imagen a la que se le aplicará la transformación
+# La resolución de la distancia para el acumulador (r)
+# La resolución en ángulo para el acumulador (theta)
+# umbral para conocer si se toma como línea o no (revisar: https://www.learnopencv.com/hough-transform-with-opencv-c-python/)
+# posterioemente se incluye un None, estuve revisando por varios lados y no comprendo por que razón se debe incluir
+# este parámetro, ya que en caso contrario, el programa falla
+lines = cv2.HoughLines(edges,1,np.pi/180,150,None)
 
- if status_list[-1] == 1 and status_list[-2] == 0:
-  times.append(datetime.now())
- if status_list[-1] == 0 and status_list[-2] == 1:
-  times.append(datetime.now())
- 
- print(status_list)
- print(times)
- #print(len(times))
- 
- if len(times) > 1:
-  for i in range(0, len(times), 2):
-   #print(times[i])
-   #print(times[i+1])
-   df = df.append({"Start":times[i], "End":times[i+1]}, ignore_index=True)
- df.to_csv("Times.csv")
- 
- cv2.imshow('frame', frame)
- cv2.imshow('Capturing', gray)
- cv2.imshow('Delta', delta_frame)
- cv2.imshow('Thresh', thresh_delta)
-  
- if cv2.waitKey(1) & 0xFF == ord('q'):
-  break;
+# en ocasiones (sobre todo si no se coloca None) la transformada regresa un valor None y todo falla
+if lines is not None:
+    # Recorrer los resultados
+    for i in range(0, len(lines)):
+        # Obtener los valores de rho (distacia)
+        rho = lines[i][0][0]
+		# y de theta (ángulo)
+        theta = lines[i][0][1]
+		# guardar el valor del cos(theta)
+        a = np.cos(theta)
+		# guardar el valor del sen(theta)
+        b = np.sin(theta)
+		# guardar el valor de r cos(theta)
+        x0 = a*rho
+		# guardar el valor de r sen(theta), todo se está haciendo de forma paramétrica
+        y0 = b*rho
+		# Ahora todo se recorrerá de -1000 a 1000 pixeles
+        x1 = int(x0 + 1000*(-b))
+        y1 = int(y0 + 1000*(a))
+        x2 = int(x0 - 1000*(-b))
+        y2 = int(y0 - 1000*(a))
+        
+		# Mostrar los valores hallados
+        print("({},{})  ({},{})".format(x1,y1, x2,y2))
+		# Generar las líneas para montarlas en la imagen original
+        cv2.line(img,(x1,y1),(x2,y2),(0,0,255),2)
 
-video.release()
-cv2.destroyAllWindows()
+# Mostrar la imagen original con todas las líneas halladas
+cv2.imshow('Asia', img)
+cv2.waitKey(0)

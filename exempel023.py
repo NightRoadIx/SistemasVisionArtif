@@ -1,31 +1,24 @@
+from matplotlib import pyplot as plt
 import numpy as np
 import cv2
 
-# Marcar que se va a realizar la captura de video
-cap = cv2.VideoCapture(0)
+img = cv2.imread('bamel.jpg')
 
-# Definir el codec (XVID) y crear el objeto VideoWriter
-# Se prefiere el XVID sobre otros tipos
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-# donde se muestra el video
-out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
+mask = np.zeros(img.shape[:2], np.uint8)
+bgdModel = np.zeros((1,65), np.float64)
+fgdModel = np.zeros((1,65), np.float64)
+rect = (50, 50, 450, 290)
 
-while(cap.isOpened()):
-    ret, frame = cap.read()
-    if ret==True:
-        frame = cv2.flip(frame,0)
+# Grabcut 
+cv2.grabCut(img, mask, rect, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_RECT)
 
-        # Escribir el frame
-        out.write(frame)
+r_channel, g_channel, b_channel = cv2.split(img) 
+a_channel = np.where((mask==2)|(mask==0), 0, 255).astype('uint8')  
 
-		# Mostrarlo también
-        cv2.imshow('frame',frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-    else:
-        break
+img_RGBA = cv2.merge((r_channel, g_channel, b_channel, a_channel))
+cv2.imwrite("test.png", img_RGBA)
 
-# Liberar todo una vez que se haya terminado
-cap.release()
-out.release()
-cv2.destroyAllWindows()
+# Now for plot correct colors : 
+img_BGRA = cv2.merge((b_channel, g_channel, r_channel, a_channel))
+
+plt.imshow(img_BGRA), plt.colorbar(),plt.show()

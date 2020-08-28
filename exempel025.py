@@ -1,70 +1,40 @@
+import numpy as np
 import cv2
-import sys
+ 
+# Cargamos la imagen
+original = cv2.imread("imagenes/monedas.jpg")
+cv2.imshow("original", original)
 
-# Mandar a llamar los clasificadores ya entrenados
-# En este caso, los archivos con los clasificadores se colocaron en la ruta:
-# C:\opencv\build\etc\haarcascades\
-faceCascade = cv2.CascadeClassifier('C:\\opencv\\build\\etc\\haarcascades\\haarcascade_frontalface_alt2.xml')
-# Y este es para ojos
-eye_cascade = cv2.CascadeClassifier('C:\\opencv\\build\\etc\\haarcascades\\haarcascade_eye.xml')
-# Y este es para la sonrisa
-smile_cascade = cv2.CascadeClassifier('C:\\opencv\\build\\etc\\haarcascades\\haarcascade_smile.xml')
+# Convertimos a escala de grises
+# se mandala imagen original y el espacio de color a utilizar
+gris = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
+ 
+# Aplicar suavizado Gaussiano
+# el último elemento representa la desviación estándar en el eje x, esto es la anchura de la campana
+# de Gauss, con un 0, OpenCV calculará automáticamente el valor dependiendo de la máscara
+# ver función cv2.getGaussianKernel(tamanno_apertura, sigma, ktype)
+# sigma se calcula como 0.3*sigma((ksize-1)*0.5 - 1) + 0.8
+# ktype, tipos de coeficientes
+gauss = cv2.GaussianBlur(gris, (5,5), 0)
+cv2.imshow("suavizado", gauss)
 
-# Iniciar con la captura de video
-video_capture = cv2.VideoCapture(0)
+# Detectamos los bordes con Canny
+canny = cv2.Canny(gauss, 50, 150)
+ 
+cv2.imshow("canny", canny)
 
-# Realizar todo en un ciclo infinito
-while True:
-    # Se captura cuadro a cuadro
-    ret, frame = video_capture.read()
-	
-    # Convertir a escala de grises
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+# Buscamos los contornos
+# (Imagen binaria, modo_contorno, método aproximación)
+# regresa una lista con los valores de los contornos
+(contornos,_) = cv2.findContours(canny.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    # Ecualizar la imagen para una mejora en la deteccion
-    # cv2.equalizeHist(gray,gray);
+# Mostramos el número de monedas por consola
+print("He encontrado {} objetos".format(len(contornos)))
 
-    # En este paso se van a almacenar la detección de caras con multiples escalas
-    faces = faceCascade.detectMultiScale(
-        gray,				# Esto se hace en escala de grises para mayor velocidad
-        scaleFactor=1.1,		# En caso de que existan rostros lejanos, se compensa mediante esto
-        minNeighbors=5,			# Aquí se define cuantos objetos han sido detectados
-        minSize=(20, 20)		# Se define el tamaño mínimo de la ventan
-    )
+# Hallar contornos
+# (imagen_oringinal, lista_de_contornos, numero_contornos, color_BGR, grosor_line_a_dibujar)
+# numero_contornos si se pasa -1, pasa todos
+cv2.drawContours(original,contornos,-1,(0,0,255), 2)
+cv2.imshow("contornos", original)
 
-    # Dibujar un rectángulo alrededor de la cara
-    # sobre los elementos del rostro
-    for (x, y, w, h) in faces:
-        # Estos valores nos dan la posición del rostro x,y,w,h
-	# Con un color BRG
-        img = cv2.rectangle(frame, (x, y), (x+w, y+h), (100, 255, 0), 2)
-        roi_gray = gray[y:y+h, x:x+w]
-        roi_color = img[y:y+h, x:x+w]
-        eyes = eye_cascade.detectMultiScale(
-            roi_gray,
-            scaleFactor=1.1,
-            minNeighbors=2,
-            minSize=(20, 20)
-        )
-        for (ex,ey,ew,eh) in eyes:
-            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,200,255),2)
-
-        smile = smile_cascade.detectMultiScale(
-            roi_gray,
-            scaleFactor=1.1,
-            minNeighbors=1,
-            minSize=(30, 30)
-        )
-        for (ex,ey,ew,eh) in smile:
-            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(150,20,0),2)            
-
-    # Mostrar el frame resultante
-    cv2.imshow('Video', frame)
-
-    # Mientras no se presione la tecla 'q'
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# Una vez que re realiza todo, hay que liberar la captura de video y destruir ventanas
-video_capture.release()
-cv2.destroyAllWindows()
+cv2.waitKey(0)
