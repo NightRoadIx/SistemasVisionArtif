@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-# Lectura de imagenes
+# Lectura de imágenes
 img1 = cv2.imread('mabel6.png')
 img2 = cv2.imread('bamel.jpg')
 
