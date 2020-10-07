@@ -1,7 +1,7 @@
 # SistemasVisionArtif
 Códigos Fuente para programación de Sistemas de Visión Artificial elaborados principalmente en lenguaje Python utilizando la librería OpenCV, junto con TensorFlow y Keras
 
-## -- Python -- :snake:   
+## :snake: Python :snake:   
 **exempel001** Apertura de imágenes con OpenCV  
 **exempel002** Apertura de imágenes con Matplotlib  
 **exempel003** Uso del evento ratón dentro de OpenCV  
