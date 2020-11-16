@@ -5,7 +5,7 @@ import cv2
 import numpy as np 
   
 # Imagen original
-img = cv2.imread('bamel.jpg', cv2.IMREAD_COLOR) 
+img = cv2.imread('monedas.jpg', cv2.IMREAD_COLOR) 
 cv2.imshow('Original', img)
 cv2.waitKey(0)
 
@@ -15,8 +15,8 @@ cv2.imshow('Grigio', gray) # grigio es en italiano, pero no se asusten, no tiene
 cv2.waitKey(0)
 
 # Ahora se aplica un filtro pasabajas de 3x3
-gray_blurred = cv2.blur(gray, (3, 3)) 
-cv2.imshow('Original', gray_blurred )
+gray_blurred = cv2.blur(gray, (9, 9)) 
+cv2.imshow('Borrosa', gray_blurred )
 cv2.waitKey(0)
 
 # Aplicar la tranfromada de Hough para detección de círculos
@@ -43,9 +43,14 @@ if detected_circles is not None:
   
         # Dibujar la circunferencia
         cv2.circle(img, (a, b), r, (0, 255, 0), 2) 
+        
+        # Mostrar los datos de las circunferencias
+        print("Centro ({:}, {:}), radio = {:}".format(a, b, r))
   
         # Dibujar un círculo pequeño alrededor del centro
         cv2.circle(img, (a, b), 1, (0, 0, 255), 3)
 		# Ir mostradndo las circunferencias detectadas
         cv2.imshow("Detección de circunferencias", img) 
         cv2.waitKey(0) 
+        
+cv2.destroyAllWindows()
