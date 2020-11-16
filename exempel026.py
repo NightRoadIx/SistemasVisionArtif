@@ -82,3 +82,4 @@ if lines is not None:
 # Mostrar la imagen original con todas las líneas halladas
 cv2.imshow('Asia', img)
 cv2.waitKey(0)
+cv2.destroyAllWindows()
