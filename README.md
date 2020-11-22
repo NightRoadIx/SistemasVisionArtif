@@ -42,7 +42,8 @@ Códigos Fuente para programación de Sistemas de Visión Artificial elaborados 
 **exempel036** Seguir un objeto umbralizado en video  
 **exempel037** Clasificador de imágenes (perros y gatos) usando un aumentado del grupo de imágenes  
 **exempel038** Clasificador de imágenes en clases con TensorFlow  
-**exempel039** Clasificador de imágenes en clases con TensorFlow usando técnicas para mejorar aprendizaje
+**exempel039** Clasificador de imágenes en clases con TensorFlow usando técnicas para mejorar aprendizaje  
+**exempel040** Corrección de ilumininación Gamma  
 
 
 
