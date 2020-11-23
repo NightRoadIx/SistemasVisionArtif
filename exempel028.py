@@ -6,6 +6,8 @@
     A diferencia del detector de esquinas de Harris, Shi-Tomasi propusieron
     como función de puntaje:
         R = min(lambda1, lambda2)
+        
+    Artpiculo: https://ieeexplore.ieee.org/document/323794
 """
 
 import numpy as np
