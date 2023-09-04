@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-# Load two images
+# Cargar la imagen
 img1 = cv2.imread('trapeador.jpg')
 
 ## Espacio de color RGB
@@ -13,11 +13,12 @@ cv2.imshow('Espacio RGB',img1)
 cv2.waitKey(0)
 
 # Escala de grises
+# Una sola capa o matriz MxN, a diferencia de los otros espacios de
+# color que son MxNx3
 img1gray = cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)
 cv2.imshow('Grigio',img1gray)
 cv2.waitKey(0)
 
-'''
 %% Modelo de color CIE 1931 XYZ
 % Es uno de los primeros espacios de color definidos matemáticamente. 
 % La idea es que el concepto de color puede ser dividido en dos partes:
@@ -30,7 +31,7 @@ img1XYZ = cv2.cvtColor(img1,cv2.COLOR_BGR2XYZ)
 cv2.imshow('XYZ',img1XYZ)
 cv2.waitKey(0)
 
-'''
+
 %% Modelo de color HSV
 % Hue Saturation Value, Matiz, Saturación, Valor
 % Se trata de una transformación no lineal del espacio de color RGB. Este
@@ -41,31 +42,27 @@ cv2.waitKey(0)
 % color
 % Saturación, representa como la distancia al eje del cono,
 % Valor es la altura en el eje blanco negro
-'''
 img1HSV = cv2.cvtColor(img1,cv2.COLOR_BGR2HSV)
 cv2.imshow('HSV',img1HSV)
 cv2.waitKey(0)
 
-'''
-Modelo de colo LAB
-Cuenta con tres componentes:
-L - Luminosidad  (Intensidad)
-a - componente de color que va de verde a magenta
-b - componente de color que va de azul a amarillo
-Este es diferente del espacio de color RGB en que el componente de luminosidad
-se encuentra separado en de las tonalidades de los tres canales de color.
-Mientras que los otros dos canales codifican el color
-
-Tiene las siguiente propiedades:
-* Uniforma perceptualmente el espacio de color el cual aproxima como percibimos el color
-* Indepenediente del dispositivo
-* Esta relacionado con el espacio de color RGB por un a ecuación de transformación compleja
-'''
+%% Modelo de color LAB
+% Cuenta con tres componentes:
+% L - Luminosidad  (Intensidad)
+% a - componente de color que va de verde a magenta
+% b - componente de color que va de azul a amarillo
+% Este es diferente del espacio de color RGB en que el componente de luminosidad
+% se encuentra separado en de las tonalidades de los tres canales de color.
+% Mientras que los otros dos canales codifican el color
+% Tiene las siguiente propiedades:
+% * Uniforma perceptualmente el espacio de color el cual aproxima como percibimos el color
+% * Indepenediente del dispositivo
+% * Esta relacionado con el espacio de color RGB por un a ecuación de transformación compleja
 img1Lab = cv2.cvtColor(img1,cv2.COLOR_BGR2Lab)
 cv2.imshow('Lab - Color',img1Lab)
 cv2.waitKey(0)
 
-'''
+
 % Este formato codifica la luminosidad, la cromancia (esto es la
 % información del color de la imagen)
 % Una vez que se convierte la imagen "data_YCBCR" es un arreglo
