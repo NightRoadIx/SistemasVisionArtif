@@ -68,9 +68,3 @@ def generarCirculos(SIZE = 597, start = -7.2, end = 8.2, step = 0.0275):
     image *= 255
     image = image.astype(np.uint8)
     return image
-
-img = generarCirculos()
-import cv2
-cv2.imshow("Circulos", img)
-cv2.waitKey()
-cv2.destroyAllWindows()
