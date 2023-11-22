@@ -4,7 +4,7 @@ from scipy.stats import moment
 import matplotlib.pyplot as plt
 
 # Vamos a "ler" una imagen digital
-imagen = cv2.imread(r"gaussian.png")
+imagen = cv2.imread(r"imagen.jpg")
 cv2.imshow("Original", imagen)
 
 # Convirtiendo la imagen a escala de grises
